@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FE1A894E-D55E-4CEA-980A-1C678A2453FC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Samba.Presentation.Common</RootNamespace>
+    <AssemblyName>Samba.Presentation.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsContainerAnalysis>False</CodeContractsContainerAnalysis>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentValidation, Version=3.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Lib\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>..\Lib\DragDrop\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <HintPath>..\Lib\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.MefExtensions">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PropertyTools, Version=2012.4.14.1, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\PropertyTools.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyTools.Wpf">
+      <HintPath>..\Lib\PropertyTools.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\Lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionProcessors\AddLineToTextFile.cs" />
+    <Compile Include="ActionProcessors\Helper.cs" />
+    <Compile Include="ActionProcessors\LoopValues.cs" />
+    <Compile Include="ActionProcessors\ModifyVariable.cs" />
+    <Compile Include="ActionProcessors\RefreshCache.cs" />
+    <Compile Include="ActionProcessors\SendEmail.cs" />
+    <Compile Include="ActionProcessors\SetActiveTicketType.cs" />
+    <Compile Include="ActionProcessors\SetWidgetValue.cs" />
+    <Compile Include="ActionProcessors\StartProcess.cs" />
+    <Compile Include="ActionProcessors\UpdatePriceTag.cs" />
+    <Compile Include="Commands\CustomCommand.cs" />
+    <Compile Include="ElementSpy.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="ModelBase\EntityCollectionSortManager.cs" />
+    <Compile Include="ModelBase\EntityIdFixer.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="RegionService.cs" />
+    <Compile Include="Widgets\WidgetEventData.cs" />
+    <Compile Include="Widgets\IWidgetCreator.cs" />
+    <Compile Include="ModelBase\AbstractMapViewModel.cs" />
+    <Compile Include="ModelBase\EntityViewModelBaseWithMap.cs" />
+    <Compile Include="ModelBase\GenericEntityView.xaml.cs">
+      <DependentUpon>GenericEntityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModelBase\IEditableCollection.cs" />
+    <Compile Include="ModelBase\IValueWithSource.cs" />
+    <Compile Include="ModelBase\MapController.cs" />
+    <Compile Include="ModelBase\NameCache.cs" />
+    <Compile Include="ObservableObject.cs" />
+    <Compile Include="PresentationModule.cs" />
+    <Compile Include="Services\ApplicationState.cs" />
+    <Compile Include="Commands\CaptionCommand.cs" />
+    <Compile Include="Commands\CategoryCommand.cs" />
+    <Compile Include="Commands\CommandCategory.cs" />
+    <Compile Include="CommonEventPublisher.cs" />
+    <Compile Include="DialogCloser.cs" />
+    <Compile Include="ErrorReport\ErrorReportView.xaml.cs">
+      <DependentUpon>ErrorReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorReport\ErrorReportViewModel.cs" />
+    <Compile Include="ErrorReport\ExceptionReporter.cs" />
+    <Compile Include="ExtensionServices.cs" />
+    <Compile Include="Widgets\IDiagram.cs" />
+    <Compile Include="IModuleInitializationService.cs" />
+    <Compile Include="Services\InteractionService.cs" />
+    <Compile Include="Commands\ICaptionCommand.cs" />
+    <Compile Include="Commands\ICategoryCommand.cs" />
+    <Compile Include="IUserInteraction.cs" />
+    <Compile Include="MessageListener.cs" />
+    <Compile Include="MessageProcessor.cs" />
+    <Compile Include="ModelBase\AbstractEntityCollectionViewModelBase.cs" />
+    <Compile Include="ModelBase\EntityCollectionBaseView.xaml.cs">
+      <DependentUpon>EntityCollectionBaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModelBase\EntityCollectionViewModelBase.cs" />
+    <Compile Include="ModelBase\EntityViewModelBase.cs" />
+    <Compile Include="ModelBase\ICountable.cs" />
+    <Compile Include="ModelBase\ModelListViewModelBase.cs" />
+    <Compile Include="ModelBase\ViewModelBase.cs" />
+    <Compile Include="ModelBase\VisibleViewModelBase.cs" />
+    <Compile Include="ModuleBase.cs" />
+    <Compile Include="NativeWin32.cs" />
+    <Compile Include="Services\PresentationServices.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionNames.cs" />
+    <Compile Include="VisibleModuleBase.cs" />
+    <Compile Include="Widgets\DefaultWidgetCreator.cs" />
+    <Compile Include="Widgets\WidgetCreatorRegistry.cs" />
+    <Compile Include="Widgets\WidgetViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lib\DataGridFilterLibrary\DataGridFilterLibrary.csproj">
+      <Project>{512FD53F-9AD1-46A1-A961-9FABDFAD50C5}</Project>
+      <Name>DataGridFilterLibrary</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\FlexButton\FlexButton.csproj">
+      <Project>{434D497A-D439-44C8-84A5-5301B572708F}</Project>
+      <Name>FlexButton</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\Stateless\Stateless.csproj">
+      <Project>{FFFDB2DE-6D0E-4C1E-B14D-B64057EEAF6D}</Project>
+      <Name>Stateless</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samba.Domain\Samba.Domain.csproj">
+      <Project>{2386F6A0-91B2-4D1A-8DBC-92109924AFFE}</Project>
+      <Name>Samba.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samba.Infrastructure.Data\Samba.Infrastructure.Data.csproj">
+      <Project>{2D64F506-D566-4CA5-A19C-BCB5F9A2E7F4}</Project>
+      <Name>Samba.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samba.Infrastructure\Samba.Infrastructure.csproj">
+      <Project>{B184E8F8-A507-4C3D-B580-184E3776A95C}</Project>
+      <Name>Samba.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samba.Localization\Samba.Localization.csproj">
+      <Project>{406B96A6-C886-4149-AD88-A2402EDB2B90}</Project>
+      <Name>Samba.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samba.Persistance\Samba.Persistance.csproj">
+      <Project>{9ACA7797-5C2A-4435-B991-E59462ACDAF6}</Project>
+      <Name>Samba.Persistance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samba.Presentation.Services\Samba.Presentation.Services.csproj">
+      <Project>{7DD8848C-3ADB-45B3-BD49-10AF3AEE2521}</Project>
+      <Name>Samba.Presentation.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samba.Services\Samba.Services.csproj">
+      <Project>{413B698C-0D7D-4FCD-9F16-AF51AED4E647}</Project>
+      <Name>Samba.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ErrorReport\ErrorReportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ModelBase\EntityCollectionBaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ModelBase\GenericEntityView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ErrorReport\Images\warning.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>IF NOT "$(ConfigurationName)"=="Release" GOTO End
+
+copy "$(TargetDir)$(TargetFileName)" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)Microsoft.Practices.Prism.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)Microsoft.Practices.ServiceLocation.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)PropertyTools.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)PropertyTools.Wpf.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)UIControls.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)GongSolutions.Wpf.DragDrop.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)System.Windows.Interactivity.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)FluentValidation.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)Omu.ValueInjecter.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)ICSharpCode.AvalonEdit.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)FluentMigrator.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)FluentMigrator.Runner.dll" "$(SolutionDir)SambaSetup\src"
+copy "$(TargetDir)Zen.Barcode.Core.dll" "$(SolutionDir)SambaSetup\src"
+
+:End</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

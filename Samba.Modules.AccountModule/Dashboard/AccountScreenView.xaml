@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Samba.Modules.AccountModule.Dashboard.AccountScreenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignWidth="300">
+
+    <Grid>
+        <StackPanel>
+            <Label Content="{LocText Name,Suffix=':'}"/>
+            <TextBox HorizontalAlignment="Left" MinWidth="200" Text="{Binding Name}" />
+            <Label Content="{LocText FilterType,Suffix=':'}"/>
+            <ComboBox ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding FilterType}" HorizontalAlignment="Left" MinWidth="200"/>
+            <CheckBox Margin="0,10,0,0" IsChecked="{Binding DisplayAsTree}" Content="{LocText DisplayAsTree}"></CheckBox>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock Margin="2,3" Text="{LocText AccountType, Suffix=':'}"/>
+                <TextBlock Margin="4,3">
+                                        <Hyperlink Command="{Binding AddScreenFilterCommand}">
+                                            <TextBlock Text="{Binding Path=AddScreenFilterCommand.Caption}" />
+                                        </Hyperlink>
+                                    </TextBlock>
+            </StackPanel>
+            <DataGrid ItemsSource="{Binding AccountScreenFilters}" MinHeight="100"
+                      HorizontalAlignment="Left" GridLinesVisibility="None" RowHeaderWidth="0" Margin="0,3" CanUserAddRows="False" CanUserDeleteRows="False"
+                      AutoGenerateColumns="False" CanUserSortColumns="False" Background="{StaticResource {x:Static SystemColors.WindowBrushKey}}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{LocText AccountType}" IsReadOnly="True"
+                                             MinWidth="100" Binding="{Binding AccountTypeName}" />
+                    <DataGridCheckBoxColumn Header="{LocText DisplayDetails}" Binding="{Binding DisplayDetails}"/>
+                    <DataGridCheckBoxColumn Header="{LocText HideAccountsWithZeroBalance}" Binding="{Binding HideZeroBalanceAccounts}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock Margin="2,3" Text="{LocText AutomationCommand, Suffix=':'}"/>
+                <TextBlock Margin="4,3">
+                                        <Hyperlink Command="{Binding SelectAutomationCommand}">
+                                            <TextBlock Text="{Binding Path=SelectAutomationCommand.Caption}" />
+                                        </Hyperlink>
+                                    </TextBlock>
+            </StackPanel>
+            <DataGrid ItemsSource="{Binding AutomationCommands}" MinHeight="100" MinWidth="200"
+                      HorizontalAlignment="Left" GridLinesVisibility="None" RowHeaderWidth="0" Margin="0,3" CanUserAddRows="False" CanUserDeleteRows="False"
+                      AutoGenerateColumns="False" CanUserSortColumns="False" Background="{StaticResource {x:Static SystemColors.WindowBrushKey}}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{LocText Name}" IsReadOnly="True" MinWidth="100" Binding="{Binding AutomationCommandName}" />
+                    <DataGridTemplateColumn Header="{LocText CommandParameter}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="3" Text="{Binding AutomationCommandValueType}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <Grid FocusManager.FocusedElement="{Binding ElementName=cbValueType}">
+                                    <ComboBox Name="cbValueType" HorizontalAlignment="Stretch" SelectedItem="{Binding AutomationCommandValueType, UpdateSourceTrigger=PropertyChanged}"
+                                                 ItemsSource="{Binding CommandValueTypes}" />
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button HorizontalAlignment="Left" Margin="0,10" MinWidth="70" Content="{Binding SaveCommand.Caption}"
+                 Command="{Binding SaveCommand}" />
+            <Label Content="{Binding Error}" Foreground="Red" />
+        </StackPanel>
+    </Grid>
+</UserControl>

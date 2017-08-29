@@ -1,0 +1,254 @@
+﻿<UserControl x:Class="Samba.Modules.PosModule.MenuItemSelectorView" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:FxButton="clr-namespace:FlexButton;assembly=FlexButton"
+             xmlns:UIControls="clr-namespace:Samba.Presentation.Controls.UIControls;assembly=Samba.Presentation.Controls"
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ItemsControl MaxHeight="70" Grid.Row="0" ItemsSource="{Binding MostUsedMenuItems}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" Columns="{Binding MostUsedItemsCategory.ColumnCount}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <FxButton:FlexButton Margin="5,0,0,7" Focusable="False" 
+                                         ButtonColor="{Binding ButtonColor, Converter={StaticResource NullBrushConverter}}"
+                                         ButtonImage="{Binding ImagePath}" Content="{Binding Caption}" Command="{Binding Command}"                        
+                                         CommandParameter="{Binding ScreenMenuItem}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid Name="MainGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25*" />
+                <ColumnDefinition Width="75*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" Name="SelectedItemsRow" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="60*" Name="MenuItemRow" />
+                <RowDefinition Height="40*" Name="NumeratorRow" />
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.RowSpan="4" Grid.Column="0" Margin="3,0,4,1" UIControls:KineticBehaviour.HandleKineticScrolling="True"
+                 VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Categories,NotifyOnTargetUpdated=True}" TargetUpdated="ItemsControl_TargetUpdated">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="{Binding CategoryColumnCount}" VerticalAlignment="{Binding CategoriesVerticalAlignment}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <FxButton:FlexButton FontSize="{Binding FontSize}" Content="{Binding Caption}" Focusable="False" Command="{Binding ButtonCommand}"
+                                 CommandParameter="{Binding Category}" Height="{Binding MButtonHeight}" Margin="0,1,1,1"
+                                 ButtonImage="{Binding ImagePath}" ButtonColor="{Binding MButtonColor,Converter={StaticResource NullBrushConverter}}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <Grid Grid.Column="1" Visibility="{Binding IsSelectedItemsVisible,Converter={StaticResource VisibilityConverter}}" Margin="0,0,0,3" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderThickness="1" BorderBrush="Silver">
+                    <ListBox BorderThickness="0" ItemsSource="{Binding SelectedMenuItems}" UIControls:ListBoxBehavior.ScrollOnNewItem="true">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock FontSize="18" MinWidth="20" Text="{Binding Quantity}"></TextBlock>
+                                    <TextBlock FontSize="18" Text="{Binding ScreenMenuItem.Caption}"></TextBlock>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+                <StackPanel Grid.Column="1">
+                    <FxButton:FlexButton Command="{Binding CloseMenuViewCommand}" Content="{Binding CloseMenuViewCommand.Caption}" 
+                                         Height="40" ButtonColor="Red" Margin="3,0"/>
+                </StackPanel>
+            </Grid>
+
+            <ListBox MinHeight="60" Grid.Row="1" Grid.Column="1" BorderThickness="0" Background="Transparent"
+                 Visibility="{Binding IsQuickNumeratorVisible,Converter={StaticResource VisibilityConverter}}"
+                 ItemsSource="{Binding QuickNumeratorValues}" SelectedItem="{Binding QuickNumeratorValue,Mode=TwoWay}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Viewbox>
+                                <TextBlock FontWeight="Bold" Text="{Binding}" />
+                            </Viewbox>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Resources>
+                    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="SnapsToDevicePixels" Value="true" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Margin="0,0,4,4" Background="WhiteSmoke" Name="Border" BorderThickness="1"
+                                         CornerRadius="4" BorderBrush="Gray">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="true">
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="2" />
+                                            <Setter Property="Foreground" Value="Red" />
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.Resources>
+            </ListBox>
+
+            <Grid Grid.Row="2" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ItemsControl Grid.Row="0"  ItemsSource="{Binding SubCategories,NotifyOnTargetUpdated=True}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="{Binding SubButtonRows}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <FxButton:FlexButton Content="{Binding Caption}" Focusable="False" Command="{Binding Command}" FontSize="{Binding FontSize}"
+                                 CommandParameter="{Binding }" Height="{Binding Height}" Margin="0,0,0,5" ButtonColor="{Binding ButtonColor,Converter={StaticResource NullBrushConverter}}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <ItemsControl Grid.Row="0" ItemsSource="{Binding MenuItems,NotifyOnTargetUpdated=True}" 
+                                  TargetUpdated="ItemsControl_TargetUpdated_1">
+                        <ItemsControl.Resources>
+                            <Style TargetType="{x:Type ItemsControl}">
+                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+                                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ItemsControl}">
+                                            <ScrollViewer CanContentScroll="True" UIControls:KineticBehaviour.HandleKineticScrolling="True">
+                                                <ItemsPresenter />
+                                            </ScrollViewer>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ItemsControl.Resources>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UIControls:VirtualizingTilePanel ItemHeight="{Binding SelectedCategory.MenuItemButtonHeight}" 
+                                                                  ColumnCount="{Binding SelectedCategory.ColumnCount}"/>
+                                <!--<UniformGrid Columns="{Binding SelectedCategory.ColumnCount}" VerticalAlignment="{Binding MenuItemsVerticalAlignment}" />-->
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <FxButton:FlexButton FontSize="{Binding FontSize}" Focusable="False" ButtonColor="{Binding ButtonColor,Converter={StaticResource NullBrushConverter}}" Content="{Binding Caption}"
+                                     Command="{Binding Command}" CommandParameter="{Binding ScreenMenuItem}"
+                                      Margin="1" ButtonImage="{Binding ImagePath}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <UniformGrid Grid.Row="1" Columns="2" Rows="1" Visibility="{Binding IsPageNumberNavigatorVisible,Converter={StaticResource VisibilityConverter}}">
+                        <FxButton:FlexButton Margin="0,3,3,3" Height="45" Command="{Binding DecPageNumberCommand}"
+                             Content="{Binding DecPageNumberCommand.Caption}" />
+                        <FxButton:FlexButton Margin="0,3,0,3" Height="45" Command="{Binding IncPageNumberCommand}"
+                             Content="{Binding IncPageNumberCommand.Caption}" />
+                    </UniformGrid>
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="3" Visibility="{Binding IsNumberpadEditorVisible,Converter={StaticResource VisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.ColumnSpan="2" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox IsReadOnly="True" Focusable="True" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"
+                         FontSize="30" FontWeight="Bold" Text="{Binding NumeratorValue,Mode=TwoWay}" />
+                    <FxButton:FlexButton MinWidth="40" Grid.Column="3" Grid.Row="0" Content='C' Command="{Binding ClearNumeratorCommand}"
+                         Margin="2,0,0,2" Focusable="False" />
+                </Grid>
+                <UniformGrid Visibility="{Binding IsNumeratorVisible,Converter={StaticResource VisibilityConverter}}" Grid.Column="0" Grid.Row="1" Rows="4" Columns="3" Grid.ColumnSpan="2">
+                    <FxButton:FlexButton Content="1" Command="{Binding TypeValueCommand}" CommandParameter="1"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="2" Command="{Binding TypeValueCommand}" CommandParameter="2"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="3" Command="{Binding TypeValueCommand}" CommandParameter="3"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="4" Command="{Binding TypeValueCommand}" CommandParameter="4"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="5" Command="{Binding TypeValueCommand}" CommandParameter="5"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="6" Command="{Binding TypeValueCommand}" CommandParameter="6"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="7" Command="{Binding TypeValueCommand}" CommandParameter="7"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="8" Command="{Binding TypeValueCommand}" CommandParameter="8"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="9" Command="{Binding TypeValueCommand}" CommandParameter="9"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="," Command="{Binding TypeValueCommand}" CommandParameter=","
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="0" Command="{Binding TypeValueCommand}" CommandParameter="0"
+                         Margin="0,0,2,2" Focusable="False" />
+                    <FxButton:FlexButton Content="x" Command="{Binding TypeValueCommand}" CommandParameter="x"
+                         Margin="0,0,2,2" Focusable="False" />
+                </UniformGrid>
+
+                <ItemsControl Visibility="{Binding IsNumeratorVisible,Converter={StaticResource VisibilityConverter}}" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding AlphaButtonValues}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <FxButton:FlexButton MaxHeight="40" Focusable="False" Margin="0,0,2,2" Content="{Binding}"
+                                 CommandParameter="{Binding}" Command="{Binding DataContext.TypeValueCommand,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

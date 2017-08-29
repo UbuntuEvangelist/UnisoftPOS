@@ -1,0 +1,19 @@
+﻿<Window x:Class="Samba.Presentation.Controls.Interaction.PropertyEditorForm" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:PropertyEditorLibrary="clr-namespace:PropertyTools.Wpf;assembly=PropertyTools.Wpf"
+        Title="{LocText PropertyEditor}" Height="343"
+        Width="368" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <PropertyEditorLibrary:PropertyControl Margin="3" Grid.Row="0" Name="PropertyEditorControl" UseTabs="False"/>
+
+        <StackPanel Name="SPanel" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Width="70" Margin="3" Click="Button_Click" Content="{LocText OK}"/>            
+        </StackPanel>
+    </Grid>
+</Window>

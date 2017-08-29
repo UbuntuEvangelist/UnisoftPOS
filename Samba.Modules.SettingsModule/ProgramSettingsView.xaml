@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Samba.Modules.SettingsModule.ProgramSettingsView" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:UIControls="clr-namespace:Samba.Presentation.Controls.UIControls;assembly=Samba.Presentation.Controls"
+             mc:Ignorable="d" d:DesignWidth="300">
+    <Grid>
+        <StackPanel>
+            <GroupBox Header="{LocText GeneralSettings}" HorizontalAlignment="Left" MinWidth="300">
+                <StackPanel Margin="5">
+                    <Label Content="{LocText UserInformation, Suffix=':'}"/>
+                    <TextBox HorizontalAlignment="Stretch" Text="{Binding UserInfo}" AcceptsReturn="True" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="{LocText PaymentScreenSettings}" HorizontalAlignment="Left" MinWidth="300">
+                <StackPanel Margin="5">
+                    <Label Content="{LocText AutoRounding, Suffix=':'}"/>
+                    <UIControls:FilteredTextBox Type="Number" HorizontalAlignment="Left" Width="50" Text="{Binding AutoRoundDiscount}" />
+                    <Label Content="{LocText PaymentScreenValues, Suffix=':'}"/>
+                    <TextBox HorizontalAlignment="Left" MinWidth="150" Text="{Binding PaymentScreenValues}" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="{LocText Barcode}" HorizontalAlignment="Left" MinWidth="300">
+                <StackPanel Margin="5">
+                    <Label Content="{LocText QuantitySeparators,Suffix=':'}"/>
+                    <TextBox HorizontalAlignment="Left" MinWidth="50" Text="{Binding QuantitySeparators}" />
+                    <Label Content="{LocText WeightBarcodePefix,Suffix=':'}"/>
+                    <UIControls:FilteredTextBox Type="Digits" HorizontalAlignment="Left" MinWidth="50" Text="{Binding WeightBarcodePrefix}" />
+                    <Label Content="{LocText WeightBarcodeItemIdLength,Suffix=':'}"/>
+                    <UIControls:FilteredTextBox Type="Digits" HorizontalAlignment="Left" MinWidth="50" Text="{Binding WeightBarcodeItemLength}" />
+                    <Label Content="{LocText WeightBarcodeItemIdFormat,Suffix=':'}"/>
+                    <TextBox HorizontalAlignment="Left" MinWidth="50" Text="{Binding WeightBarcodeItemFormat}" />
+                    <Label Content="{LocText WeightBarcodeQuantityLength,Suffix=':'}"/>
+                    <UIControls:FilteredTextBox Type="Digits" HorizontalAlignment="Left" MinWidth="50" Text="{Binding WeightBarcodeQuantityLength}" />
+                </StackPanel>
+            </GroupBox>
+            <Button HorizontalAlignment="Left" Margin="0,10" MinWidth="70" Content="{Binding SaveCommand.Caption}"
+                 Command="{Binding SaveCommand}" />
+            <Label Content="{Binding Error}" Foreground="Red" />
+        </StackPanel>
+    </Grid>
+</UserControl>

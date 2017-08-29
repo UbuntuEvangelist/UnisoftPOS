@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="Samba.Modules.PosModule.TicketListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:FlexButton="clr-namespace:FlexButton;assembly=FlexButton" mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.Column="0" HorizontalAlignment="Left" >
+                <TextBlock Text="{Binding ListName}" FontWeight="Bold"></TextBlock>
+            </Viewbox>
+            <Viewbox Grid.Column="1" Margin="20,0,0,0" HorizontalAlignment="Right">
+                <TextBlock Text="{Binding TotalRemainingAmountLabel}" FontWeight="Bold"></TextBlock>
+            </Viewbox>
+        </Grid>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Tickets}" VerticalAlignment="Stretch" Grid.IsSharedSizeScope="True">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="{Binding RowCount}"></UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <DataTemplate.Resources>
+                        <Storyboard x:Key="ButtonClick">
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                         Storyboard.TargetName="border">
+                                <EasingColorKeyFrame KeyTime="0" Value="Silver" />
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="Release">
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                         Storyboard.TargetName="border">
+                                <EasingColorKeyFrame KeyTime="0" Value="Silver" />
+                                <EasingColorKeyFrame KeyTime="0:0:0.2" Value="Gainsboro" />
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </DataTemplate.Resources>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"  MinWidth="60" SharedSizeGroup="Grp1"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="selector" Style="{StaticResource ItemsControlButtonStyle}" Command="{Binding SelectTicketCommand}">
+                            <Border Grid.Column="0" BorderThickness="1,1,0,1" CornerRadius="5,0,0,5" BorderBrush="Silver" Background="{Binding SelectionBackground}">
+                                <Viewbox Margin="5">
+                                    <TextBlock Text="{Binding TicketNumber}" HorizontalAlignment="Left" Foreground="{Binding SelectionForeground}"/>
+                                </Viewbox>
+                            </Border>
+                        </Button>
+                        <Button x:Name="button" Grid.Column="1" Style="{StaticResource ItemsControlButtonStyle}" Command="{Binding OpenTicketCommand}" >
+                            <Border x:Name="border" Grid.Column="1"  BorderThickness="1" BorderBrush="{Binding SelectionBackground}" Background="Gainsboro">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Viewbox Grid.Row="0" HorizontalAlignment="Left">
+                                        <ItemsControl ItemsSource="{Binding TicketTags}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel></WrapPanel>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="Silver" BorderThickness="1" Background="LightGray" CornerRadius="2" Margin="3" Padding="3">
+                                                        <TextBlock Text="{Binding TagValue}" ToolTip="{Binding TagName}"/>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Viewbox>
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Viewbox Grid.Column="0" HorizontalAlignment="Left">
+                                            <ItemsControl ItemsSource="{Binding ResourceNames}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel></WrapPanel>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Background="Silver" CornerRadius="2" Margin="3" Padding="3">
+                                                            <TextBlock Text="{Binding .}"/>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Viewbox>
+                                        <Viewbox Grid.Column="1" >
+                                            <TextBlock Text="{Binding RemainingAmountLabel}" Margin="0,0,3,0"/>
+                                        </Viewbox>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Button>
+
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True" SourceName="button">
+                            <Trigger.ExitActions>
+                                <BeginStoryboard x:Name="Release_BeginStoryboard" Storyboard="{StaticResource Release}" />
+                            </Trigger.ExitActions>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource ButtonClick}" />
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!--<UniformGrid Grid.Row="2" Rows="1">
+            <FlexButton:FlexButton FontSize="40" Margin="0,0,3,0" Command="{Binding MergeTicketsCommand}" Content="{Binding MergeTicketsCommand.Caption}"/>
+            <FlexButton:FlexButton FontSize="40" Command="{Binding AddTicketCommand}" Content="{Binding AddTicketCommand.Caption}"/>
+            <FlexButton:FlexButton FontSize="40" Margin="3,0,0,0" Command="{Binding CloseCommand}" Content="{Binding CloseCommand.Caption}" ButtonColor="Red"/>
+        </UniformGrid>-->
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding CommandButtons}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <FlexButton:FlexButton FontSize="{Binding FontSize}" Focusable="False" ButtonColor="{Binding Color,Converter={StaticResource NullBrushConverter}}" Command="{Binding Command}"
+                                             CommandParameter="{Binding Parameter}" Content="{Binding Caption}" Margin="3,3,3,0">
+                    </FlexButton:FlexButton>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

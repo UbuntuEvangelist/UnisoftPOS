@@ -1,0 +1,171 @@
+﻿<UserControl x:Class="Samba.Modules.InventoryModule.WarehouseInventoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:flexButton="clr-namespace:FlexButton;assembly=FlexButton"
+             xmlns:uiControls="clr-namespace:Samba.Presentation.Controls.UIControls;assembly=Samba.Presentation.Controls"
+             xmlns:DataGridFilterLibrary="clr-namespace:DataGridFilterLibrary;assembly=DataGridFilterLibrary"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600" FontSize="20">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding WarehouseButtons}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <flexButton:FlexButton Margin="2" Content="{Binding Caption}" FontSize="26"
+                                           Command="{Binding DataContext.WarehouseButtonSelectedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                           CommandParameter="{Binding Model}" ButtonColor="{Binding ButtonColor}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <TabControl Margin="3" Grid.Row="1" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="{LocText InventoryItems}">
+                <uiControls:EnhancedDataGrid ItemsSource="{Binding PeriodicConsumptionItems}" Name="WarehouseInventoryGrid"
+                                 HorizontalAlignment="Stretch" GridLinesVisibility="None" RowHeaderWidth="0" Margin="5"
+                                 AutoGenerateColumns="False" CanUserDeleteRows="False" Background="{StaticResource {x:Static SystemColors.WindowBrushKey}}"
+                                 PreviewKeyDown="DataGrid_PreviewKeyDown" PreviewTextInput="DataGrid_PreviewTextInput"
+                                 PreparingCellForEdit="DataGrid_PreparingCellForEdit" AlternatingRowBackground="WhiteSmoke" AlternationCount="2"
+                                             ColumnHeaderStyle="{StaticResource {ComponentResourceKey 
+                                            TypeInTargetAssembly={x:Type DataGridFilterLibrary:DataGridHeaderFilterControl}, 
+                                            ResourceId=DataGridHeaderFilterControlStyle}}">
+                    <uiControls:EnhancedDataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Center">
+                            </Setter>
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding}">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </uiControls:EnhancedDataGrid.Resources>
+                    <uiControls:EnhancedDataGrid.Columns>
+                        <DataGridTemplateColumn Width="2*" Header="{LocText Name}" SortMemberPath="ItemName"
+                             IsReadOnly="True" MinWidth="100" CellStyle="{StaticResource LeftAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding ItemName}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText Unit}" IsReadOnly="True" SortMemberPath="UnitName"
+                             CellStyle="{StaticResource LeftAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding UnitName}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText InStock}" SortMemberPath="InStock"
+                            MinWidth="60" IsReadOnly="True" CellStyle="{StaticResource RightAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding Path=InStock,StringFormat='#,#0.##;-#,#0.##;-'}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText Purchase}" SortMemberPath="Purchase"
+                             MinWidth="60" IsReadOnly="True" CellStyle="{StaticResource RightAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding Path=Purchase,StringFormat='#,#0.##;-#,#0.##;-'}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText Cost}" SortMemberPath="Cost"
+                             MinWidth="60" IsReadOnly="True" CellStyle="{StaticResource RightAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding Path=Cost,StringFormat='#,#0.00'}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText Consumption}" SortMemberPath="Consumption"
+                             MinWidth="60" IsReadOnly="True" CellStyle="{StaticResource RightAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding Path=Consumption,StringFormat='#,#0.##;-#,#0.##;-'}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText PredictedInventory}" SortMemberPath="InventoryPrediction"
+                             MinWidth="60" IsReadOnly="True" CellStyle="{StaticResource RightAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding Path=InventoryPrediction,StringFormat='#,#0.##'}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </uiControls:EnhancedDataGrid.Columns>
+                </uiControls:EnhancedDataGrid>
+            </TabItem>
+            <TabItem Header="{LocText Costs}">
+                <uiControls:EnhancedDataGrid Name="WarehouseCostGrid" ItemsSource="{Binding CostItems}" HorizontalAlignment="Stretch" GridLinesVisibility="None"
+                     RowHeaderWidth="0" Margin="5" AutoGenerateColumns="False" CanUserSortColumns="False"
+                     CanUserDeleteRows="False" Background="{StaticResource {x:Static SystemColors.WindowBrushKey}}">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Center">
+                            </Setter>
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding}">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="2*" Header="{LocText ProductName}"
+                             IsReadOnly="True" MinWidth="100" CellStyle="{StaticResource LeftAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding MenuItemName}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText Portion}"
+                             IsReadOnly="True" CellStyle="{StaticResource LeftAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding PortionName}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText SellAmount}"
+                             MinWidth="60" IsReadOnly="True" CellStyle="{StaticResource RightAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding Path=Quantity,StringFormat='#,#0.##;-#,#0.##;-'}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="{LocText CostPrediction}"
+                             MinWidth="60" IsReadOnly="True" CellStyle="{StaticResource RightAlignedGridCell}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="3" Text="{Binding Path=CostPrediction,StringFormat='#,#0.00'}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </uiControls:EnhancedDataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+</UserControl>
