@@ -1,6 +1,7 @@
-#SambaPOS Touch Screen POS Software
+#UnisoftPOS Touch Screen POS Software
 
 More Information
-http://emreeren.github.com/SambaPOS-3/
+https://github.com/saydulk/UnisoftPOS
 
-Visit www.sambapos.com for stable releases.
+Visit http://www.unisoftpos.com/ for stable releases.
+# UnisoftPOS
